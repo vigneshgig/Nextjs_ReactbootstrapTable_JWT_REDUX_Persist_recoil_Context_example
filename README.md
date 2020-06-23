@@ -41,3 +41,9 @@ https://redis.io/topics/quickstart
 ## NOte:
 Default I used redux persist state management to share the data. But I also coded recoil and context withno data persistance which has been comment.
 
+Reference:
+https://www.youtube.com/watch?v=7J4iL1HDshQ&list=PLYSZyzpwBEWSQsrukurP09ksi49H9Yj40
+https://www.youtube.com/watch?v=2tJedF8I-8Q&t=482s
+https://github.com/zeit/next.js/tree/canary/examples
+
+I used mostly client side rendering for data fetching some part i used server side rendering for authenication...
