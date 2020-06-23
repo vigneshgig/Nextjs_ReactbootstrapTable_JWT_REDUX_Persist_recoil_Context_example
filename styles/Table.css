@@ -1,0 +1,11 @@
+
+button.btn {
+    position: relative;
+    margin:auto;
+    margin:10px;
+    width: 100%;
+   max-width: 290px;
+   box-sizing: border-box; 
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+} 
