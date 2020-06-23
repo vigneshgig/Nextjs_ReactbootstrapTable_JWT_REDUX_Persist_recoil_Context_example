@@ -2,7 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, Start the redis server:
+https://redis.io/topics/quickstart
+
+Second, run the development server:
 
 ```bash
 npm run dev
@@ -28,3 +31,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Redis
+I used Redis to store the username and token so that we can do logout functionality by deleting token in redis db, So kindly install and start redis server before starting nextjs project.
+
+Kindly follow below link step.
+https://redis.io/topics/quickstart
+
