@@ -38,3 +38,6 @@ I used Redis to store the username and token so that we can do logout functional
 Kindly follow below link step.
 https://redis.io/topics/quickstart
 
+## NOte:
+Default I used redux persist state management to share the data. But I also coded recoil and context withno data persistance which has been comment.
+
