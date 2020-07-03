@@ -304,7 +304,7 @@ TotalReportPage.getInitialProps = async (ctx) => {
     const json = await resp.json();
     return { verification: json };
   } else {
-    const resp = await fetch("http://10.101.1.245:3003/api/auth_check_admin", {
+    const resp = await fetch("http://localhost:3003/api/auth_check_admin", {
       headers: {
         cookie: cookie,
       },

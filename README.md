@@ -13,7 +13,7 @@ npm run dev
 yarn dev
 ```
 
-Open [http://10.101.1.245:3000](http://10.101.1.245:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
@@ -33,12 +33,14 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 ## Redis
+
 I used Redis to store the username and token so that we can do logout functionality by deleting token in redis db, So kindly install and start redis server before starting nextjs project.
 
 Kindly follow below link step.
 https://redis.io/topics/quickstart
 
 ## NOte:
+
 Default I used redux persist state management to share the data. But I also coded recoil and context withno data persistance which has been comment.
 
 Reference:

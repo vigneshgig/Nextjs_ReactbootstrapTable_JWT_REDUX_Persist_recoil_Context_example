@@ -186,7 +186,7 @@ export default function SignUpSide() {
 
 //     }
 //     else {
-//         const resp = await fetch('http://10.101.1.245:3003/api/auth_check_admin', {
+//         const resp = await fetch('http://localhost:3003/api/auth_check_admin', {
 //             headers: {
 //                 cookie: cookie
 //             }

@@ -94,7 +94,7 @@ const AddTopicsTagPage = ({ verification }) => {
     handleReset();
 
     // try {
-    //     const res = await fetch('http://10.101.1.245:3003/api/')
+    //     const res = await fetch('http://localhost:3003/api/')
     // }
   };
 
@@ -207,7 +207,7 @@ AddTopicsTagPage.getInitialProps = async (ctx) => {
     const json = await resp.json();
     return { verification: json };
   } else {
-    const resp = await fetch("http://10.101.1.245:3003/api/auth_check", {
+    const resp = await fetch("http://localhost:3003/api/auth_check", {
       headers: {
         cookie: cookie,
       },

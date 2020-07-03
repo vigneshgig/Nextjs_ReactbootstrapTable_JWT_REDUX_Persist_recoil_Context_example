@@ -19,7 +19,7 @@ LogoutPage.getInitialProps = async (ctx) => {
     const json = await resp.json();
     return { logout: json.logout };
   } else {
-    const resp = await fetch("http://10.101.1.245:3003/api/LogOut", {
+    const resp = await fetch("http://localhost:3003/api/LogOut", {
       method: "GET",
       headers: {
         cookie: cookie,
