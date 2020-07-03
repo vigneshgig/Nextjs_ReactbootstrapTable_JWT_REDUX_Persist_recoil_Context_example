@@ -29,7 +29,7 @@ const NavigationPage = () => {
         <React.Fragment>
             <Navbar bg="dark" variant="dark">
                 <Link href='/' passHref prefetch>
-                    <Navbar.Brand>GI Retail</Navbar.Brand>
+                    <Navbar.Brand>Armsofttech</Navbar.Brand>
                 </Link>
                 <Nav className="mr-auto">
                     <Link href='/AddTopics' passHref prefetch>
@@ -38,8 +38,15 @@ const NavigationPage = () => {
                     <Link href="/TopicsTag" passHref prefetch>
                         <Nav.Link >Tagging</Nav.Link>
                     </Link>
+
                     <Link href="/AdminPage" passHref prefetch>
                         <Nav.Link >AdminPage</Nav.Link>
+                    </Link>
+                    <Link href='/ReportPage_1' passHref prefetch>
+                        <Nav.Link>{username == 'admin' ? 'DateWiseReport' : 'DateWiseReport-Unauthorised'}</Nav.Link>
+                    </Link>
+                    <Link href="/TotalReportPage" passHref prefetch>
+                        <Nav.Link >{username == 'admin' ? 'TotalReport' : 'TotalReport-Unauthorised'}</Nav.Link>
                     </Link>
                     <Link href="/Logout" passHref prefetch>
                         <Nav.Link >Logout</Nav.Link>

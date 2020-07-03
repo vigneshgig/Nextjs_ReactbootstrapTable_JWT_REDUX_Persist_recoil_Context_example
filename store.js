@@ -15,7 +15,7 @@ const UserInitialState = {
 export const actionTypes = {
     CURRENTUSER: "CURRENTUSER",
     COUNTGLOBAL: "COUNTGLOBAL",
-    ALLTOPICCOUNT: "ALLTOPICCOUNT"
+    ALLTOPICCOUNTS: "ALLTOPICCOUNTS"
 }
 
 // REDUCERS
@@ -31,7 +31,7 @@ export const reducer = (state = UserInitialState, action) => {
                 ...state,
                 count: action.payload,
             }
-        case actionTypes.ALLTOPICCOUNT:
+        case actionTypes.ALLTOPICCOUNTS:
             return {
                 ...state,
                 alltopiccount: action.payload
@@ -51,13 +51,13 @@ export const ActionCountTable = (count) => {
 }
 
 export const ActionAllTopicCount = (count_dict) => {
-    return {type: actionTypes.ALLTOPICCOUNT, payload: count_dict}
+    return {type: actionTypes.ALLTOPICCOUNTS, payload: count_dict}
 } 
 
 const persistConfig = {
     key: 'primary',
     storage,
-    whitelist: ['Username', 'count'], // place to select which state you want to persist
+    whitelist: ['Username', 'count','alltopiccount'], // place to select which state you want to persist
 }
 
 const persistedReducer = persistReducer(persistConfig, reducer)

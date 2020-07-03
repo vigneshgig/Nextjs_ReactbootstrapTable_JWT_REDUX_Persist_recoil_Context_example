@@ -21,7 +21,7 @@ export default authenticated(async function SetTag(req, res) {
             const statement = await db.prepare(query_string)
 
             for (let i = 0; i < value.length; i++) {
-                statement.run(value[i].Starting,
+                await statement.run(value[i].Starting,
                     value[i].Ending,
                     value[i].id);
 
@@ -31,8 +31,20 @@ export default authenticated(async function SetTag(req, res) {
 
 
 
-            statement.finalize();
-            res.json({ message: statement, Updated: true })
+            await statement.finalize();
+            const delete_string = 'DELETE FROM Video WHERE id = ?'
+            const statement_1 = await db.prepare(delete_string)
+            const ids_value = req.body.ids_value
+            for (let i = 0; i < ids_value.length; i++) {
+                statement_1.run(ids_value[i])
+                // result_array.push(result)
+            }
+
+
+
+            statement_1.finalize();
+
+            res.json({ message: statement, statement_delete:statement_1,Updated: true })
         }
         catch (err) {
             console.log(err)

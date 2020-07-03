@@ -9,7 +9,8 @@ const LogoutPage = () => {
 export default LogoutPage;
 LogoutPage.getInitialProps = async (ctx) => {
     const cookie = ctx.req?.headers.cookie;
-    const resp = await fetch('http://localhost:3003/api/LogOut', {
+    if (!ctx.req) {
+    const resp = await fetch('http://220.225.104.138:3003/api/LogOut', {
         method: 'GET',
         headers: {
             cookie: cookie,
@@ -19,14 +20,27 @@ LogoutPage.getInitialProps = async (ctx) => {
         Router.replace('/')
         return {};
     }
+    const json = await resp.json();
+    return { logout: json.logout };
+    }
+    else{
+        const resp = await fetch('http://10.101.1.245:3003/api/LogOut', {
+        method: 'GET',
+        headers: {
+            cookie: cookie,
+        }
+    });
     if (resp.status === 200 && ctx.req) {
         ctx.res?.writeHead(302, {
-            Location: 'http://localhost:3003/'
+            Location: 'http://220.225.104.138:3003/'
         });
         ctx.res?.end();
         return;
     }
     const json = await resp.json();
     return { logout: json.logout };
+    }
+    
+    
 
 }

@@ -18,7 +18,8 @@ export default function Home() {
 }
 Home.getInitialProps = async (ctx) => {
   const cookie = ctx.req?.headers.cookie;
-  const resp = await fetch('http://localhost:3003/api/auth_check', {
+  if(!ctx.req){
+    const resp = await fetch('http://220.225.104.138:3003/api/auth_check', {
     headers: {
       cookie: cookie
     }
@@ -27,14 +28,26 @@ Home.getInitialProps = async (ctx) => {
     Router.replace('/AddTopics')
     return {};
   }
-  if (resp.status === 200 && ctx.req) {
-    ctx.res?.writeHead(302, {
-      Location: 'http://localhost:3003/AddTopics'
-    });
-    ctx.res?.end();
-    return;
-  }
   const json = await resp.json();
   return { verification: json };
 
+  }
+  
+  else{
+    const resp = await fetch('http://10.101.1.245:3003/api/auth_check', {
+      headers: {
+        cookie: cookie
+      }
+    });
+    if (resp.status === 200 && ctx.req) {
+      ctx.res?.writeHead(302, {
+        Location: 'http://220.225.104.138:3003/AddTopics'
+      });
+      ctx.res?.end();
+      return;
+    }
+    const json = await resp.json();
+  return { verification: json };
+  }
+  
 }

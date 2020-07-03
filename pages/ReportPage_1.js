@@ -1,130 +1,160 @@
 import React, { useState, useEffect } from 'react';
 import NavigationPage from '../component/NavComponent';
 import '../styles/topicsstyle.css';
+import '../styles/addtopics.css';
+
 import { Button, Badge } from 'react-bootstrap';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import BootstrapTable from 'react-bootstrap-table-next';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import Router from 'next/router';
+import ToolkitProvider, { CSVExport, Search } from 'react-bootstrap-table2-toolkit';
+const { SearchBar } = Search;
+const { ExportCSVButton } = CSVExport;
+var date = new Date()
 
-const AdminPage = (props) => {
+const ReportPage = (props) => {
     const [tableValue, setTableValue] = useState([]);
     const [Message, setMessage] = useState('');
     const [count, setCount] = useState(0);
-    const TimeFormat = (cell,row) => {
-        return (<pre>{cell}</pre>)
-        }
-    function headFormatter(column, colIndex,{ filterElement }) {
-            return (
-                <div style={{ "overflow-wrap": "break-word", display: 'flex', flexDirection: 'column' }}>
-    
-                    <strong>
-                        {column.text}
-                    </strong>{filterElement}</div>
-            );
-        }
     // setTopics()
+    function headFormatter(column, colIndex, { sortElement, filterElement }) {
+        return (
+            <div style={{ "overflow-wrap": "break-word", display: 'flex', flexDirection: 'column' }}>
+
+                <strong>
+                    {column.text}
+                </strong>{filterElement}{sortElement}</div>
+        );
+    }
     const columns = [{
         dataField: 'id',
-        text: 'ID',
+        text: 'id',
         editable: false,
-        filter: textFilter(),
-
+        headerFormatter: headFormatter
     }, {
-        dataField: 'Link',
-        text: 'Link',
+        dataField: 'Date',
+        text: 'Date',
         editable: false,
+        sort: true,
         filter: textFilter(),
         headerFormatter: headFormatter,
-        formatter:TimeFormat,
-        style: {
-            cursor: 'pointer', color: 'blue'
-        },
-        events: {
-            onClick: (e, column, columnIndex, row, rowIndex) => {
-                let url = row.Link;
-                window.open(url);
-            }
 
-        }
-    },
-    {
-        dataField: 'Starting',
-        text: 'Start (00hrs:00min:00sec)',
-        filter: textFilter(),
-        editable: false,
-        formatter:TimeFormat,
-        headerFormatter: headFormatter
-
-    },
-    {
-        dataField: 'Ending',
-        text: 'End (00hrs:00min:00sec)',
-        filter: textFilter(),
-        editable: false,
-        formatter:TimeFormat,
-        headerFormatter: headFormatter
     },
     {
         dataField: 'Topic',
         text: 'Topic',
-        filter: textFilter(),
         editable: false,
-        formatter:TimeFormat,
+        filter: textFilter(),
         headerFormatter: headFormatter
     },
     {
-        dataField: 'Tagged',
-        text: 'Tagged',
+        dataField: 'Total_Uploaded_Video',
+        text: 'Total_Uploaded_Video',
         editable: false,
+        sort: true,
         filter: textFilter(),
-        formatter:TimeFormat,
-        headerFormatter: headFormatter
-    },
-    {
-        dataField: 'CreatedBy',
-        text: 'CreatedBy',
-        editable: false,
-        filter: textFilter(),
-        formatter:TimeFormat,
-        headerFormatter: headFormatter
-    }, {
-        dataField: 'AssignedTo',
-        text: 'AssignedTo',
-        editable: false,
-        filter: textFilter(),
-        formatter:TimeFormat,
-        headerFormatter: headFormatter
-    }, {
-        dataField: 'DATETIME',
-        text: 'DATETIME',
-        filter: textFilter(),
-        editable: false,
         headerFormatter: headFormatter
 
+
+    },{
+        dataField: 'No_Of_Video_Tagged',
+        text: 'No_Of_Video_Tagged',
+        editable: false,
+        sort: true,
+        filter: textFilter(),
+        headerFormatter: headFormatter
+    },
+    {
+        dataField: 'No_Of_Video_UnTagged',
+        text: 'No_Of_Video_UnTagged',
+        editable: false,
+        sort: true,
+        filter: textFilter(),
+        headerFormatter: headFormatter
+    },
+    {
+        dataField: 'Overall_Video_Timing',
+        text: 'Overall_Video_Timing',
+        editable: false,
+        sort: true,
+        filter: textFilter(),
+        headerFormatter: headFormatter
+    },
+    {
+        dataField: 'TaggedTiminig',
+        text: 'TaggedTiminig',
+        editable: false,
+        sort: true,
+        filter: textFilter(),
+        headerFormatter: headFormatter
+    }, {
+        dataField: 'Downloaded',
+        text: 'Downloaded',
+        sort: true,
+        filter: textFilter(),
+        headerFormatter: headFormatter
+    }, {
+        dataField: 'UnDownloaded',
+        text: 'UnDownloaded',
+        editable: false,
+        sort: true,
+        filter: textFilter(),
+        headerFormatter: headFormatter
+    }, {
+        dataField: 'Download_Failed',
+        text: 'Download_Failed',
+        editable: false,
+        sort: true,
+        filter: textFilter(),
+        headerFormatter: headFormatter
     }
-
-
     ];
-    const options = {
-        // pageStartIndex: 0,
-        sizePerPage: 5,
-        hideSizePerPage: true,
-        hidePageListOnlyOnePage: true
-    };
+    const sizePerPageRenderer = ({
+        options,
+        currSizePerPage,
+        onSizePerPageChange
+      }) => (
+        <div className="btn-group" role="group">
+          {
+            options.map((option) => {
+              const isSelect = currSizePerPage === `${option.page}`;
+              return (
+                <button
+                  key={ option.text }
+                  type="button"
+                  onClick={ () => onSizePerPageChange(option.page) }
+                  className={ `btn ${isSelect ? 'btn-secondary' : 'btn-primary'}` }
+                >
+                  { option.text }
+                </button>
+              );
+            })
+          }
+        </div>
+      );
+      
+      const options = {
+        sizePerPageRenderer
+      };
     const handleDataChange = ({ dataSize }) => {
         setCount(dataSize);
     }
     useEffect(() => {
         const fetchData = async () => {
-            const resp = await fetch('http://220.225.104.138:3003/api/GetLink', {
+            const resp = await fetch('http://220.225.104.138:3003/api/ReportGenerate_1', {
                 method: 'GET',
             })
+
             const json = await resp.json();
-            if (json.success) {
+            if (json.success == 'Pass') {
+                for (let index in json.result) {
+                    json.result[index]['id'] = parseInt(index) + 1
+                }
                 setTableValue(json.result)
-                // setCount(json.result.length)
                 setMessage('Passed.........')
+
+                // setCount(json.result.length)
             }
             else {
                 setMessage('Failed..........')
@@ -135,11 +165,14 @@ const AdminPage = (props) => {
     }, [])
 
     const onSubmitHandle = async () => {
-        const resp = await fetch('http://220.225.104.138:3003/api/GetLink', {
+        const resp = await fetch('http://220.225.104.138:3003/api/ReportGenerate_1', {
             method: 'GET',
         })
         const json = await resp.json();
         if (json.success) {
+            for (let index in json.result) {
+                json.result[index]['id'] = parseInt(index) + 1
+            }
             setTableValue(json.result)
             // setCount(json.result.length)
             setMessage('Passed.........')
@@ -203,20 +236,37 @@ const AdminPage = (props) => {
     return (
         <React.Fragment>
             <NavigationPage />
-            <Button variant="primary">
-                Count: <Badge variant="light">{count}</Badge>
-            </Button>
-            <BootstrapTable keyField='id' data={tableValue} columns={columns} noDataIndication="Table is Empty" pagination={paginationFactory(options)} filter={filterFactory()} onDataSizeChange={handleDataChange} />
+
+            <ToolkitProvider
+                keyField="id"
+                data={tableValue}
+                columns={columns}
+                exportCSV={{
+                    onlyExportFiltered: true, exportAll: false, fileName: 'Report' + date + '.csv'
+                }}
+                search
+            >{props => (
+                <div>
+                    <ExportCSVButton {...props.csvProps}>Export CSV!!</ExportCSVButton>
+                    <Button variant="primary" className='btn main-btn float-right'>
+                        Count: <Badge variant="light">{count}</Badge>
+                    </Button>
+                    <hr />
+                    <SearchBar {...props.searchProps} />
+                    <BootstrapTable wrapperClasses='.table-responsive' {...props.baseProps} keyField='id' data={tableValue} columns={columns} noDataIndication="Table is Empty" pagination={paginationFactory(options)} filter={filterFactory()} onDataSizeChange={handleDataChange} />
+                </div>)}
+            </ToolkitProvider>
             <Button id='tableupdate' variant='primary' className='btn main-btn float-right' size='lg' onClick={onSubmitHandle}>Update</Button>
+
         </React.Fragment>);
 }
 
-export default AdminPage;
+export default ReportPage;
 
-AdminPage.getInitialProps = async (ctx) => {
+ReportPage.getInitialProps = async (ctx) => {
     const cookie = ctx.req?.headers.cookie;
     if(!ctx.req) {
-        const resp = await fetch('http://220.225.104.138:3003/api/auth_check', {
+        const resp = await fetch('http://220.225.104.138:3003/api/auth_check_admin', {
             headers: {
                 cookie: cookie
             }
@@ -230,7 +280,7 @@ AdminPage.getInitialProps = async (ctx) => {
 
     }
     else {
-        const resp = await fetch('http://10.101.1.245:3003/api/auth_check', {
+        const resp = await fetch('http://10.101.1.245:3003/api/auth_check_admin', {
             headers: {
                 cookie: cookie
             }
@@ -246,5 +296,4 @@ AdminPage.getInitialProps = async (ctx) => {
     return { logout: json.logout };
 
     }
-    
 }

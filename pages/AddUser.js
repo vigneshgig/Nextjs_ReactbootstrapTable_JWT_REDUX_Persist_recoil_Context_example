@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SignInSide() {
+export default function SignUpSide() {
     const classes = useStyles();
     const [Username, setUsername] = useState(null);
     const [Password, setPassword] = useState(null);
@@ -82,7 +82,7 @@ export default function SignInSide() {
     const onSubmit = async (event) => {
 
 
-        const resp = await fetch('http://localhost:3003/api/SignUp', {
+        const resp = await fetch('http://220.225.104.138:3003/api/SignUp', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -179,25 +179,39 @@ export default function SignInSide() {
     );
 }
 
-SignInSide.getInitialProps = async (ctx) => {
-    const cookie = ctx.req?.headers.cookie;
-    const resp = await fetch('http://localhost:3003/api/auth_check_admin', {
-        headers: {
-            cookie: cookie
-        }
-    });
-    if (resp.status === 401 && !ctx.req) {
-        Router.replace('/')
-        return {};
-    }
-    if (resp.status === 401 && ctx.req) {
-        ctx.res?.writeHead(302, {
-            Location: 'http://localhost:3003/'
-        });
-        ctx.res?.end();
-        return;
-    }
-    const json = await resp.json();
-    return { verification: json };
+// SignUpSide.getInitialProps = async (ctx) => {
+//     const cookie = ctx.req?.headers.cookie;
+//     if(!ctx.req) {
+//         const resp = await fetch('http://220.225.104.138:3003/api/auth_check_admin', {
+//             headers: {
+//                 cookie: cookie
+//             }
+//         });
+//         if (resp.status === 401 && !ctx.req) {
+//             Router.replace('/')
+//             return {};
+//         }
+//         const json = await resp.json();
+//         return { verification: json };
 
-}
+//     }
+//     else {
+//         const resp = await fetch('http://10.101.1.245:3003/api/auth_check_admin', {
+//             headers: {
+//                 cookie: cookie
+//             }
+//         });
+//         if (resp.status === 401 && ctx.req) {
+//             ctx.res?.writeHead(302, {
+//                 Location: 'http://220.225.104.138:3003/'
+//             });
+//             ctx.res?.end();
+//             return;
+//         }
+        
+//         const json = await resp.json();
+//         return { verification: json };
+//     }
+    
+    
+// }

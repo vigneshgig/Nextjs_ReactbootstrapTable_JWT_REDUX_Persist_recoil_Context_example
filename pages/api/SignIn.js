@@ -35,12 +35,11 @@ export default async function login(req, res) {
             await compare(req.body.password, user.Password, function (err, result) {
                 if (!err && result) {
                     const claims = { sub: user.id, username: user.Username };
-                    const jwt = sign(claims, token, { expiresIn: '1h' });
+                    const jwt = sign(claims, token, { expiresIn: '10d' });
                     client.set(user.Username, jwt, redis.print);
                     res.setHeader('Set-Cookie', cookie.serialize('auth', jwt, {
                         httpOnly: true,
-                        secure: process.env.NODE_ENV !== 'development',
-                        maxAge: 3600,
+                        secure:false,
                         sameSite: "none",
                         path: '/'
                     }))

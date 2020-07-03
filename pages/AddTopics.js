@@ -43,14 +43,19 @@ const AddTopicsTagPage = ({ verification }) => {
     };
 
     const handleSubmit = async (event) => {
-
+        // event.persist()
+            // event.stopPropagation();
+        event.persist()
         const form = event.currentTarget;
         // event.preventDefault();
         if (form.checkValidity() === false) {
+            alert('..........validation')
             event.preventDefault();
             event.stopPropagation();
         }
-        const res = await fetch('http://localhost:3003/api/AddLink', {
+
+        event.preventDefault();
+        const res = await fetch('http://220.225.104.138:3003/api/AddLink', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -83,19 +88,20 @@ const AddTopicsTagPage = ({ verification }) => {
 
 
         }
-        // document.getElementById('mainSubmit').disabled = true
-        // document.getElementById('mainSubmit').value = 'Submit'
-        // document.getElementById('mainSubmit').style.background = 'primary';
-        event.preventDefault();
+    
+
+        document.getElementById('main-btn').disabled = false
+        document.getElementById('main-btn').value = 'Submit'
+        document.getElementById('main-btn').style.background = '#007AFC';
         // dispatchUserInformation(username);
         setValidated(true);
         setADD_link('')
         setRadio('')
         handleReset();
 
-
+        
         // try {
-        //     const res = await fetch('http://localhost:3003/api/')
+        //     const res = await fetch('http://10.101.1.245:3003/api/')
         // }
 
 
@@ -141,16 +147,15 @@ const AddTopicsTagPage = ({ verification }) => {
                                                 id={item}
                                                 value={item}
                                                 onClick={e => setRadio(e.target.value)}
-
+                                                
+                                                feedback="please select the topic"
                                             />
 
                                             {/* </Button> */}
                                         </Col>
                                     ))}
                                     {/* <Form.Control.Feedback>Selected</Form.Control.Feedback> */}
-                                    <Form.Control.Feedback type="invalid">
-                                        Please select the topic
-                                    </Form.Control.Feedback>
+                                    
 
                                 </Form.Group>
                             </fieldset>
@@ -188,23 +193,37 @@ export default AddTopicsTagPage;
 
 AddTopicsTagPage.getInitialProps = async (ctx) => {
     const cookie = ctx.req?.headers.cookie;
-    const resp = await fetch('http://localhost:3003/api/auth_check', {
-        headers: {
-            cookie: cookie
-        }
-    });
-    if (resp.status === 401 && !ctx.req) {
-        Router.replace('/')
-        return {};
-    }
-    if (resp.status === 401 && ctx.req) {
-        ctx.res?.writeHead(302, {
-            Location: 'http://localhost:3003/'
+    if(!ctx.req) {
+        const resp = await fetch('http://220.225.104.138:3003/api/auth_check', {
+            headers: {
+                cookie: cookie
+            }
         });
-        ctx.res?.end();
-        return;
-    }
-    const json = await resp.json();
-    return { verification: json };
+        if (resp.status === 401 && !ctx.req) {
+            Router.replace('/')
+            return {};
+        }
 
+        const json = await resp.json();
+        return { verification: json };
+    }
+    else {
+        const resp = await fetch('http://10.101.1.245:3003/api/auth_check', {
+            headers: {
+                cookie: cookie
+            }
+        });
+        if (resp.status === 401 && ctx.req) {
+            ctx.res?.writeHead(302, {
+                Location: 'http://220.225.104.138:3003/'
+            });
+            ctx.res?.end();
+            return;
+        }
+        const json = await resp.json();
+        return { verification: json }; 
+
+    }
+
+    
 }

@@ -1,2 +1,4 @@
-export const Topicslist = ['sneezing', 'eating', 'walking', 'talking', 'chating', 'hugging', 'fighting', 'stealing', 'shoplifing', 'gangfight']
-export const Topicslistwithall = ['all', 'sneezing', 'eating', 'walking', 'talking', 'chating', 'hugging', 'fighting', 'stealing', 'shoplifing', 'gangfight']
+export const Topicslist = [
+    'Airport(handbags)', 'Customer-handbag-Shopping-Mall', 'Passengers-Metro-Railway', 'Walk-in-out-lobby', 'office', 'Sneezing', 'Shoplifting/burglary','Fighting' ,'Kicking','People-stretcher','House-Breaking','Violence', 'Rioting', 'Crying', 'Socialdistancing', 'Vehicle-Accidents','Muslims-Airport','Vehicle-Zebra-Crossing','Road-Violation','Car-Chasing','Bike-Chasing','Over-Speed-driving','Parking-Violation','Vehicle Lane Crossing']
+export const Topicslistwithall = [ 'all',
+    'Airport(handbags)', 'Customer-handbag-Shopping-Mall', 'Passengers-Metro-Railway', 'Walk-in-out-lobby', 'office', 'Sneezing', 'Shoplifting/burglary','Fighting' ,'Kicking','People-stretcher','House-Breaking','Violence', 'Rioting', 'Crying', 'Socialdistancing', 'Vehicle-Accidents','Muslims-Airport','Vehicle-Zebra-Crossing','Road-Violation','Car-Chasing','Bike-Chasing','Over-Speed-driving','Parking-Violation', 'Vehicle Lane Crossing']
