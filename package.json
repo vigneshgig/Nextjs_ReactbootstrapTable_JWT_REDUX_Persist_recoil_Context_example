@@ -23,7 +23,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-redis": "^5.0.11",
-    "next": "9.4.4",
+    "next": "11.1.0",
     "pm2": "^4.4.0",
     "react": "16.13.1",
     "react-bootstrap": "^1.0.1",
